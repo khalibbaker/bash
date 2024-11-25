@@ -12,26 +12,29 @@ readarray -t filesystems_arr < <(df -h)
 filesystem_name=""
 
 # Init: a variable to store current usage
-file_system_usage=""
+filesystem_usage=""
 
 # Init: a variable to store mounted on directory director
 mounted_directory=""
 
+# Init: an array to store the disk usages
+disk_usage=()
+
 # Init: a variable for filesystem threshold (i.e. filesystem more than X % used)
 threshold=90
 
-for item in ${filesystems_arr[@]}
-do
-    if [[ "$item" =~ ^File ]]; then
-        echo "removed"
-    else
-        echo ${filesystems_arr[item]}
-    fi
+readarray -t disk_usage < <(df -h | grep -vE "^Filesystem|tmpfs|cdrom")
+
+filesystem_usage=$(echo $disk_usage[1]} | awk '{print $5}')
+filesystem_usage=${filesystem_usage::-1}
 
 
-done
+echo $filesystem_usage
 
-echo ${filesystems_arr[0]}
+if [ "$filesystem_usage" -gt "$threshold" ]; then
+    echo ALERT
+
+fi
 
 
 
