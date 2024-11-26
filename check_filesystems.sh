@@ -2,17 +2,13 @@
 
 
 # Init: an array named filesystems_arr with the first element removed. The first element is the first row output from df -h 
-# mapfile -t filesystems_arr < <( df -h )
-
-# IFS=$'\n' filesystems_arr=( $(df -h) )
-# filesystems_arr=( `df -h` )
-readarray -t filesystems_arr < <(df -h)
+filesystems_arr=()
 
 # Init: a variable to store file system 
 filesystem_name=""
 
 # Init: a variable to store current usage
-file_system_usage=""
+filesystem_usage=""
 
 # Init: a variable to store mounted on directory director
 mounted_directory=""
@@ -20,32 +16,20 @@ mounted_directory=""
 # Init: a variable for filesystem threshold (i.e. filesystem more than X % used)
 threshold=90
 
+
+# Store each line of the output of the df -h command as an entry in the array
+IFS=$'\n' filesystems_arr=( $(df -h | grep -vE '^Filesystems|tmpfs') )
+
+# Loop: iterate over each row of df -h and if threshold is met for usage, then alert
 for item in ${filesystems_arr[@]}
 do
-    if [[ "$item" =~ ^File ]]; then
-        echo "removed"
-    else
-        echo ${filesystems_arr[item]}
+    filesystem_usage=$(echo $item | awk '{print $5}' | cut -c1-2)
+    filesystem_name=$(echo $item | awk '{print $1}')
+    mounted_directory=$(echo $item | awk '{print $6}')
+    
+    if [[ $filesystem_usage -gt 20 ]]; then
+        # Send 
+        echo ALERT!! $filesystem_name on $mounted_directory is above $threshold. 
     fi
 
-
 done
-
-# adding a commment to send to git
-echo "Hello World"
-
-
-
-
-# echo ${filesystems_arr[0]} | awk '{print $5}' | cut -c1-2
-# echo $threshold
-
-# # Loop: to loop through array of filesystems outputed by df -h
-# for item in ${filesystems_arr[@]}
-# do
-#     # echo $item
-#     file_system_usage=$(echo ${filesystems_arr[$item]} | awk '{print $5}' | cut -c1-2)
-#     echo $file_system_usage
-
-
-# done
