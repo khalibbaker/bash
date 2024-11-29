@@ -16,6 +16,9 @@ sap_service_name=""
 # Init: sap_service_status variable to store the status of the sap service (GREEN, YELLOW, RED)
 sap_service_status=""
 
+# Init: sap_service_text_status to store the additional text status of the sap sever (Scheduled, Initializing)
+sap_service_text_status=""
+
 # Init: sapcontrol_full_output to store the complete output of the sapcontrol command of GetProcess:List
 sapcontrol_full_ouput=()
 
@@ -37,25 +40,26 @@ do
 
    sap_service_name=$(echo ${field[1]} | xargs)
    sap_service_status=$(echo ${field[2]} | xargs)
+   sap_service_text_status=$(echo ${field[3]} | xargs)
 
     # Case: if the status is GREEN, YELLOW, RED, or GRAY, taken action.
    case $sap_service_status in
     "GREEN")
-        echo "$sap_service_status for $sap_service_name"
+        echo $sap_service_status for $sap_service_name.
         ;;
     "YELLOW")
-        echo "WARNING"
+        echo WARNING for $sap_service_name. Staus is $sap_service_text_status.
         # Send email 
         ;;
     "RED")
-        echo "ALERT / ALERT"
+        echo ALERT for $sap_service_name. Staus is $sap_service_text_status. 
         # Send email
         ;;
     "GRAY")
-        echo "$sap_service_name is down."
+        echo $sap_service_name is down. Status is $sap_service_text_status.
         ;;
     *)
-        echo "goodbye"
+        echo Goodbye
         ;;
     esac
 done

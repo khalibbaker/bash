@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Author: Khalib Baker
+# Company: Sysad Solutions
+# Description: This script checks the OS/Linux users on a server, provided by a os_user.dat file for password
+# and account expiration.
+
 # Init: a <systems>.dat file to be provided as argument 1
 systems_file="$1"
 

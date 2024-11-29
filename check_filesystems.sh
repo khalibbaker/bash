@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Author: Khalib Baker
+# Company: Sysad Solutions
+# Description: This script checks the filesystems attached to a server and alerts if file systems 
+# meet a threshold percentage (i.e. 90%)
 
 # Init: an array named filesystems_arr with the first element removed. The first element is the first row output from df -h 
 filesystems_arr=()
