@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Author: Khalib Baker
+# Company: Sysad Solutions
+# Description: This script checks the SAP server processes of application and database instances
+
 # Init: a <systems>.dat file to be provided as argument 1
 systems_file="$1"
 
