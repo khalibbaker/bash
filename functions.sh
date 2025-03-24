@@ -302,3 +302,13 @@ function check_filesystems() {
 
 
 }
+
+
+# Add export_hana_tables.sh as function
+
+# Add import_hana_tables.sh as function
+
+# Add check_hana_versions.sh as function 
+
+# Add check_sap_certificates.sh
+

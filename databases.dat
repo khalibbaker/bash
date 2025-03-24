@@ -1,2 +1,3 @@
 # IP address Hostname  SAP USER ASCS Inst.   Dialog/Java Inst.   Webdispatcher Inst. Additional Inst. HANA Database
+172.0.0.4   saphx1hdb  hx1adm   HDB90 SBX
 172.0.0.4   saphx1hdb  hx1adm   HDB90 SYSTEMDB
