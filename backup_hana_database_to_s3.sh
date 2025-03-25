@@ -75,8 +75,10 @@ sudo aws s3 sync $backup_directory_for_today  s3://sysad-solutions/hana_backups/
 if [ $? -eq 0 ]; then
     echo $(date)
     echo "HANA Backup(s) uploaded to AWS S3 successfully..."
+    # Send email 
 else
     echo "Error: There was an issue with uploading the HANA backups to AWS S3!"
     exit 5
+    # Send email
 fi
 
