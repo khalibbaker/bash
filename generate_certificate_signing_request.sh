@@ -28,7 +28,7 @@ else
     echo "There are $certificate_request_directory_files_count files found in directory: $certificate_request_directory/..." ; echo "" ; sleep 2
 fi
 
-# Remove any trailing slashes (/) from the directory specified
+# Conditon: Remove any trailing slashes (/) from the directory specified
 if [[ "$certificate_request_directory" == */ ]]; then
     certificate_request_directory="${certificate_request_directory%/}"
 fi
@@ -80,8 +80,6 @@ do
     # Init: counter variable for index of certificate_list_arr
     certificate_list_arr_index_counter=0
 
-
-
     # Loop: interate through the certificate_list_arr. Store the first item as the common name (cn)
     echo "Using the following common name (CN) and [optional] subject alternative name(s)..." ; echo "" ; sleep 3
     for item in "${certificate_list_arr[@]}"
@@ -98,8 +96,6 @@ do
 
         let certificate_list_arr_index_counter++
     done
-
-
 
     # Create a directory to store the certificate TLS application and CSR
     certificate_common_name_dir=$certificate_common_name
@@ -121,7 +117,6 @@ do
         "distinguished_name     = req_distinguished_name"
         "req_extensions         = v3_req"
     )
-
     for item in "${req_arr[@]}"
     do
         echo $item >> $tls_certificate_application_file
@@ -178,11 +173,11 @@ do
     -out $certificate_common_name_dir/${certificate_common_name}.csr \
     -config $tls_certificate_application_file 2>/dev/null
 
+    # Status of script execution
     echo "Completed CSR: $csr_counter" ; echo "" ; sleep 2
     # Copy the original file with all the CN and SANs into respective directory
     # cp $file 
     # Send email of CSR attachment
-
 done
 
 # End of script execution
